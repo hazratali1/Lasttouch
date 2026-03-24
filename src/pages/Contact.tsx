@@ -71,7 +71,7 @@ const Contact = () => {
                 <Phone className="text-[#14e0ff] mb-2" size={28} />
                 <h3 className="font-semibold text-white mb-1">Phone</h3>
                 <a href={`tel:${PHONE_TEL}`} className="hover:text-[#14e0ff] transition-colors">
-                  {PHONE_TEL}
+                  {PHONE_DISPLAY}
                 </a>
               </div>
 
