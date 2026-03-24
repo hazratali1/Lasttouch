@@ -17,7 +17,7 @@ const WhatsAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 // ✅ WhatsApp/phone number
 const PHONE_TEL = "+8801614408837";
-const PHONE_DISPLAY = "+8801614408837";
+const PHONE_DISPLAY = "+880 1614-408837";
 const WA_LINK = "https://wa.me/8801614408837";
 
 const Contact = () => {
