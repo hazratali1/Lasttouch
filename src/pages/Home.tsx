@@ -5,7 +5,7 @@ import ServiceCard from "@/components/features/ServiceCard";
 
 const Home = () => {
   return (
-    <div className="min-h-screen">
+    <>
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,217,255,0.05),transparent_50%)]" />
@@ -39,21 +39,25 @@ const Home = () => {
               icon={Brain}
               title="AI Integration & Automation"
               description="Leverage cutting-edge AI to automate processes and unlock insights."
+              delay={0}
             />
             <ServiceCard
               icon={Cloud}
               title="IT Infrastructure & Cloud"
               description="Scalable cloud solutions designed for modern businesses."
+              delay={0.1}
             />
             <ServiceCard
               icon={Code}
               title="Custom Software Development"
               description="Tailored applications built to meet your unique needs."
+              delay={0.2}
             />
             <ServiceCard
               icon={HeadphonesIcon}
               title="24/7 Technical Support"
               description="Round-the-clock expert support to keep you running smoothly."
+              delay={0.3}
             />
           </div>
         </div>
@@ -80,7 +84,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 };
 

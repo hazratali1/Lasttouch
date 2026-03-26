@@ -12,11 +12,14 @@ const Layout = ({ children }: LayoutProps) => {
 
   useEffect(() => {
     if (menuOpen) {
+      document.body.classList.add('menu-open');
       document.body.style.overflow = 'hidden';
     } else {
+      document.body.classList.remove('menu-open');
       document.body.style.overflow = 'auto';
     }
     return () => {
+      document.body.classList.remove('menu-open');
       document.body.style.overflow = 'auto';
     };
   }, [menuOpen]);

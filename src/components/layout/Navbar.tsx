@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import logo from "@/assets/logo.png";
 
 interface NavbarProps {
@@ -49,29 +50,10 @@ const Navbar = ({ onMenuStateChange }: NavbarProps) => {
               />
               <span className="text-xl md:text-2xl font-bold text-white tracking-wide">LastTouch</span>
             </Link>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-6">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`relative px-1 py-1 text-[15px] font-medium transition-all duration-300 ${
-                    isActive(link.path) ? "text-[#14e0ff]" : "text-[#cfdbe6] hover:text-[#14e0ff]"
-                  }`}
-                >
-                  {link.name}
-                  {isActive(link.path) && (
-                    <span className="absolute left-0 -bottom-1 w-full h-[2px] bg-[#14e0ff] drop-shadow-[0_0_8px_rgba(20,224,255,1)]"></span>
-                  )}
-                </Link>
-              ))}
-            </div>
-
-            {/* Mobile Menu Button */}
             <button
-              className="md:hidden text-[#14e0ff] p-1"
+              className="md:hidden flex items-center justify-center p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#14e0ff]"
               onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle menu"
             >
               {isOpen ? <X size={26} /> : <Menu size={26} />}
             </button>
@@ -79,9 +61,16 @@ const Navbar = ({ onMenuStateChange }: NavbarProps) => {
         </div>
       </nav>
 
-      {/* Mobile Navigation Overlay */}
-      {isOpen && (
+      {/* Mobile Navigation Overlay rendered via Portal */}
+      {isOpen && typeof window !== 'undefined' && createPortal(
         <div className="mobile-menu-solid md:hidden">
+          <button
+            className="absolute top-6 right-6 text-white"
+            onClick={() => setIsOpen(false)}
+            aria-label="Close menu"
+          >
+            <X size={32} />
+          </button>
           <div className="flex flex-col items-center gap-10 px-6">
             {navLinks.map((link) => (
               <Link
@@ -89,8 +78,8 @@ const Navbar = ({ onMenuStateChange }: NavbarProps) => {
                 to={link.path}
                 onClick={() => setIsOpen(false)}
                 className={`block text-2xl font-bold transition-all duration-300 ${
-                  isActive(link.path) 
-                    ? "text-[#14e0ff] scale-110" 
+                  isActive(link.path)
+                    ? "text-[#14e0ff] scale-110"
                     : "text-[#cfdbe6] hover:text-[#14e0ff]"
                 }`}
               >
@@ -98,7 +87,8 @@ const Navbar = ({ onMenuStateChange }: NavbarProps) => {
               </Link>
             ))}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
