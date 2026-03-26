@@ -23,7 +23,9 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#020b18]/95 md:bg-background/50 backdrop-blur-xl border-b border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.3)]">
+      <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-xl border-b border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.3)] ${
+        isOpen ? 'bg-[#020b18]' : 'bg-[#020b18]/95 md:bg-background/50'
+      }`}>
         <div className="w-full px-6 md:px-[60px] py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-3">
