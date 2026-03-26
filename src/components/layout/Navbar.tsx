@@ -22,73 +22,75 @@ const Navbar = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#020b18]/95 md:bg-background/50 backdrop-blur-xl border-b border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.3)]">
-      <div className="w-full px-6 md:px-[60px] py-4">
-        <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3">
-            <img
-              src={logo}
-              alt="LastTouch Logo"
-              loading="eager"
-              decoding="async"
-              onError={(event) => {
-                event.currentTarget.src = fallbackLogo;
-              }}
-              className="h-[44px] w-[44px] rounded-full border-2 border-[#14e0ff] object-cover"
-            />
-            <span className="text-xl md:text-2xl font-bold text-white tracking-wide">LastTouch</span>
-          </Link>
+    <>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#020b18]/95 md:bg-background/50 backdrop-blur-xl border-b border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.3)]">
+        <div className="w-full px-6 md:px-[60px] py-4">
+          <div className="flex items-center justify-between">
+            <Link to="/" className="flex items-center gap-3">
+              <img
+                src={logo}
+                alt="LastTouch Logo"
+                loading="eager"
+                decoding="async"
+                onError={(event) => {
+                  event.currentTarget.src = fallbackLogo;
+                }}
+                className="h-[44px] w-[44px] rounded-full border-2 border-[#14e0ff] object-cover"
+              />
+              <span className="text-xl md:text-2xl font-bold text-white tracking-wide">LastTouch</span>
+            </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`relative px-1 py-1 text-[15px] font-medium transition-all duration-300 ${
-                  isActive(link.path) ? "text-[#14e0ff]" : "text-[#cfdbe6] hover:text-[#14e0ff]"
-                }`}
-              >
-                {link.name}
-                {isActive(link.path) && (
-                  <span className="absolute left-0 -bottom-1 w-full h-[2px] bg-[#14e0ff] drop-shadow-[0_0_8px_rgba(20,224,255,1)]"></span>
-                )}
-              </Link>
-            ))}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-[#14e0ff] p-1"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <X size={26} /> : <Menu size={26} />}
-          </button>
-        </div>
-
-        {/* Mobile Navigation */}
-        {isOpen && (
-          <div className="md:hidden fixed inset-0 top-[76px] z-50 bg-[#020b18] border-t border-white/10 shadow-2xl overflow-y-auto animate-in fade-in slide-in-from-top-4 duration-300">
-            <div className="flex flex-col items-center gap-8 px-6 py-12">
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-6">
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
-                  onClick={() => setIsOpen(false)}
-                  className={`block text-xl font-semibold transition-all duration-300 ${
-                    isActive(link.path) 
-                      ? "text-[#14e0ff] scale-110" 
-                      : "text-[#cfdbe6] hover:text-[#14e0ff]"
+                  className={`relative px-1 py-1 text-[15px] font-medium transition-all duration-300 ${
+                    isActive(link.path) ? "text-[#14e0ff]" : "text-[#cfdbe6] hover:text-[#14e0ff]"
                   }`}
                 >
                   {link.name}
+                  {isActive(link.path) && (
+                    <span className="absolute left-0 -bottom-1 w-full h-[2px] bg-[#14e0ff] drop-shadow-[0_0_8px_rgba(20,224,255,1)]"></span>
+                  )}
                 </Link>
               ))}
             </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden text-[#14e0ff] p-1"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <X size={26} /> : <Menu size={26} />}
+            </button>
           </div>
-        )}
-      </div>
-    </nav>
+        </div>
+      </nav>
+
+      {/* Mobile Navigation Overlay */}
+      {isOpen && (
+        <div className="mobile-menu-solid md:hidden">
+          <div className="flex flex-col items-center gap-10 px-6">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                onClick={() => setIsOpen(false)}
+                className={`block text-2xl font-bold transition-all duration-300 ${
+                  isActive(link.path) 
+                    ? "text-[#14e0ff] scale-110" 
+                    : "text-[#cfdbe6] hover:text-[#14e0ff]"
+                }`}
+              >
+                {link.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
