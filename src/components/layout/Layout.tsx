@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 //import AIChatbot from "@/components/AIChatbot"; // ✅ Import your chatbot
@@ -8,11 +8,24 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [menuOpen]);
+
   return (
     <div className="min-h-screen flex flex-col">
       <div className="wave-bg"></div>
       {/* Header */}
-      <Navbar />
+      <Navbar onMenuStateChange={setMenuOpen} />
 
       {/* Page content */}
       <main className="flex-grow">{children}</main>

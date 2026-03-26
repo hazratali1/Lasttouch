@@ -1,14 +1,22 @@
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import logo from "@/assets/logo.png";
+
+interface NavbarProps {
+  onMenuStateChange?: (isOpen: boolean) => void;
+}
 
 const fallbackLogo =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23020b18'/%3E%3Cstop offset='100%25' stop-color='%230b3a55'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23g)' stroke='%2314e0ff' stroke-width='2'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-size='20' font-family='Inter,Arial,sans-serif' fill='white' font-weight='700'%3ELT%3C/text%3E%3C/svg%3E";
 
-const Navbar = () => {
+const Navbar = ({ onMenuStateChange }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    onMenuStateChange?.(isOpen);
+  }, [isOpen, onMenuStateChange]);
 
   const navLinks = [
     { name: "Home", path: "/" },
