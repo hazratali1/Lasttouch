@@ -68,19 +68,23 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden mt-4 pb-4 space-y-4 absolute top-full left-0 w-full bg-[#061a30] backdrop-blur-xl px-4 py-6 border-b border-white/10 flex flex-col items-center shadow-2xl">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                onClick={() => setIsOpen(false)}
-                className={`block text-lg font-medium transition-colors ${
-                  isActive(link.path) ? "text-[#14e0ff]" : "text-[#cfdbe6] hover:text-[#14e0ff]"
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
+          <div className="md:hidden fixed inset-0 top-[76px] z-50 bg-[#020b18] border-t border-white/10 shadow-2xl overflow-y-auto animate-in fade-in slide-in-from-top-4 duration-300">
+            <div className="flex flex-col items-center gap-8 px-6 py-12">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setIsOpen(false)}
+                  className={`block text-xl font-semibold transition-all duration-300 ${
+                    isActive(link.path) 
+                      ? "text-[#14e0ff] scale-110" 
+                      : "text-[#cfdbe6] hover:text-[#14e0ff]"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </div>
           </div>
         )}
       </div>
