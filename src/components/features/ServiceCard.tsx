@@ -6,11 +6,12 @@ interface ServiceCardProps {
   title: string;
   description: string;
   delay?: number;
+  direction?: "left" | "right" | "up" | "down";
 }
 
-const ServiceCard = ({ icon: Icon, title, description, delay = 0 }: ServiceCardProps) => {
+const ServiceCard = ({ icon: Icon, title, description, delay = 0, direction = "up" }: ServiceCardProps) => {
   return (
-    <AnimatedOnScroll className="exp-box group box-3d text-center flex flex-col items-center justify-center" delay={delay}>
+    <AnimatedOnScroll className="exp-box group box-3d text-center flex flex-col items-center justify-center h-full" delay={delay} direction={direction}>
       <div className="mb-4 text-[#14e0ff] group-hover:scale-110 transition-transform duration-300">
         <Icon size={40} />
       </div>

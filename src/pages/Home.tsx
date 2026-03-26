@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Brain, Cloud, Code, HeadphonesIcon } from "lucide-react";
 import ServiceCard from "@/components/features/ServiceCard";
+import { AnimatedOnScroll } from "@/components/ui/AnimatedOnScroll";
 
 const Home = () => {
   return (
@@ -40,24 +41,28 @@ const Home = () => {
               title="AI Integration & Automation"
               description="Leverage cutting-edge AI to automate processes and unlock insights."
               delay={0}
+              direction="left"
             />
             <ServiceCard
               icon={Cloud}
               title="IT Infrastructure & Cloud"
               description="Scalable cloud solutions designed for modern businesses."
               delay={0.1}
+              direction="right"
             />
             <ServiceCard
               icon={Code}
               title="Custom Software Development"
               description="Tailored applications built to meet your unique needs."
               delay={0.2}
+              direction="left"
             />
             <ServiceCard
               icon={HeadphonesIcon}
               title="24/7 Technical Support"
               description="Round-the-clock expert support to keep you running smoothly."
               delay={0.3}
+              direction="right"
             />
           </div>
         </div>
@@ -70,17 +75,19 @@ const Home = () => {
             <h2 className="text-4xl font-bold mb-6 text-white">
               We Are <span style={{ color: "#14e0ff" }}>LastTouch</span>
             </h2>
-            <div className="box mx-auto !w-full box-3d" style={{ padding: "40px" }}>
-              <p className="text-[16px] text-[#cce8f0] leading-relaxed opacity-90 text-center">
-                A global IT partner helping businesses harness the power of Artificial
-                Intelligence and modern IT systems to achieve operational excellence. With
-                our expertise in AI, cloud infrastructure, and custom software development,
-                we transform challenges into opportunities for growth.
-              </p>
-              <Link to="/about" className="cv-download-btn mt-8">
-                Learn More About Us
-              </Link>
-            </div>
+            <AnimatedOnScroll direction="up">
+              <div className="box mx-auto !w-full box-3d" style={{ padding: "40px" }}>
+                <p className="text-[16px] text-[#cce8f0] leading-relaxed opacity-90 text-center">
+                  A global IT partner helping businesses harness the power of Artificial
+                  Intelligence and modern IT systems to achieve operational excellence. With
+                  our expertise in AI, cloud infrastructure, and custom software development,
+                  we transform challenges into opportunities for growth.
+                </p>
+                <Link to="/about" className="cv-download-btn mt-8">
+                  Learn More About Us
+                </Link>
+              </div>
+            </AnimatedOnScroll>
           </div>
         </div>
       </section>

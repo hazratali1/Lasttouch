@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { AnimatedOnScroll } from "@/components/ui/AnimatedOnScroll";
 
 const WhatsAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 32 32" aria-hidden="true" {...props}>
@@ -64,108 +65,112 @@ const Contact = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left: Contact details */}
           <div className="space-y-6">
-            <div className="exp-box text-center">
-              <h2 className="text-[20px] font-bold text-white mb-8">Contact Information</h2>
+            <AnimatedOnScroll direction="left">
+              <div className="exp-box text-center">
+                <h2 className="text-[20px] font-bold text-white mb-8">Contact Information</h2>
 
-              <div className="flex flex-col items-center text-[#cce8f0] opacity-90 mb-8">
-                <Phone className="text-[#14e0ff] mb-2" size={28} />
-                <h3 className="font-semibold text-white mb-1">Phone</h3>
-                <a href={`tel:${PHONE_TEL}`} className="hover:text-[#14e0ff] transition-colors">
-                  {PHONE_DISPLAY}
-                </a>
-              </div>
+                <div className="flex flex-col items-center text-[#cce8f0] opacity-90 mb-8">
+                  <Phone className="text-[#14e0ff] mb-2" size={28} />
+                  <h3 className="font-semibold text-white mb-1">Phone</h3>
+                  <a href={`tel:${PHONE_TEL}`} className="hover:text-[#14e0ff] transition-colors">
+                    {PHONE_DISPLAY}
+                  </a>
+                </div>
 
-              <a
-                href={WA_LINK}
-                target="_blank"
-                rel="noreferrer"
-                className="flex flex-col items-center text-[#cce8f0] opacity-90 hover:text-[#14e0ff] mb-8"
-                aria-label="Chat on WhatsApp"
-              >
-                <WhatsAppIcon width={26} height={26} className="text-[#14e0ff] mb-2" />
-                <span>WhatsApp: {PHONE_DISPLAY}</span>
-              </a>
-
-              <div className="flex flex-col items-center text-[#cce8f0] opacity-90 mb-8">
-                <Mail className="text-[#14e0ff] mb-2" size={28} />
-                <h3 className="font-semibold text-white mb-1">Email</h3>
                 <a
-                  href="mailto:contact.lasttuch@gmail.com"
-                  className="hover:text-[#14e0ff] transition-colors text-center"
+                  href={WA_LINK}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex flex-col items-center text-[#cce8f0] opacity-90 hover:text-[#14e0ff] mb-8"
+                  aria-label="Chat on WhatsApp"
                 >
-                  contact.lasttuch@gmail.com
+                  <WhatsAppIcon width={26} height={26} className="text-[#14e0ff] mb-2" />
+                  <span>WhatsApp: {PHONE_DISPLAY}</span>
                 </a>
-              </div>
 
-              <div className="flex flex-col items-center text-[#cce8f0] opacity-90 mb-2">
-                <MapPin className="text-[#14e0ff] mb-2" size={28} />
-                <h3 className="font-semibold text-white mb-1 text-center">Office</h3>
-                <p className="text-center">Dhaka, Bangladesh</p>
+                <div className="flex flex-col items-center text-[#cce8f0] opacity-90 mb-8">
+                  <Mail className="text-[#14e0ff] mb-2" size={28} />
+                  <h3 className="font-semibold text-white mb-1">Email</h3>
+                  <a
+                    href="mailto:contact.lasttuch@gmail.com"
+                    className="hover:text-[#14e0ff] transition-colors text-center"
+                  >
+                    contact.lasttuch@gmail.com
+                  </a>
+                </div>
+
+                <div className="flex flex-col items-center text-[#cce8f0] opacity-90 mb-2">
+                  <MapPin className="text-[#14e0ff] mb-2" size={28} />
+                  <h3 className="font-semibold text-white mb-1 text-center">Office</h3>
+                  <p className="text-center">Dhaka, Bangladesh</p>
+                </div>
               </div>
-            </div>
+            </AnimatedOnScroll>
           </div>
 
           {/* Right: Contact Form */}
           <div className="lg:col-span-2">
-            <div className="exp-box text-center">
-              <h2 className="text-[20px] font-bold text-white mb-8">Send us a message</h2>
-              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div className="md:col-span-1">
-                  <Label htmlFor="name" className="text-[#cce8f0]">Name *</Label>
-                  <Input
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="mt-2 bg-[#020b18] border-[#14e0ff]/30 text-white focus-visible:ring-[#14e0ff]"
-                  />
-                </div>
-                <div className="md:col-span-1">
-                  <Label htmlFor="email" className="text-[#cce8f0]">Email *</Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    type="email"
-                    className="mt-2 bg-[#020b18] border-[#14e0ff]/30 text-white focus-visible:ring-[#14e0ff]"
-                  />
-                </div>
-                <div className="md:col-span-2">
-                  <Label htmlFor="company" className="text-[#cce8f0]">Company</Label>
-                  <Input
-                    id="company"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleChange}
-                    className="mt-2 bg-[#020b18] border-[#14e0ff]/30 text-white focus-visible:ring-[#14e0ff]"
-                  />
-                </div>
-                <div className="md:col-span-2">
-                  <Label htmlFor="message" className="text-[#cce8f0]">Message *</Label>
-                  <Textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={5}
-                    className="mt-2 bg-[#020b18] border-[#14e0ff]/30 text-white focus-visible:ring-[#14e0ff]"
-                  />
-                </div>
-                <div className="md:col-span-2 text-center">
-                  <button
-                    type="submit"
-                    className="cv-download-btn !mt-2 w-full md:w-auto"
-                    disabled={sending}
-                  >
-                    {sending ? "Sending..." : "Send Message"}
-                  </button>
-                </div>
-              </form>
-            </div>
+            <AnimatedOnScroll direction="right">
+              <div className="exp-box text-center">
+                <h2 className="text-[20px] font-bold text-white mb-8">Send us a message</h2>
+                <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="md:col-span-1">
+                    <Label htmlFor="name" className="text-[#cce8f0]">Name *</Label>
+                    <Input
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="mt-2 bg-[#020b18] border-[#14e0ff]/30 text-white focus-visible:ring-[#14e0ff]"
+                    />
+                  </div>
+                  <div className="md:col-span-1">
+                    <Label htmlFor="email" className="text-[#cce8f0]">Email *</Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      type="email"
+                      className="mt-2 bg-[#020b18] border-[#14e0ff]/30 text-white focus-visible:ring-[#14e0ff]"
+                    />
+                  </div>
+                  <div className="md:col-span-2">
+                    <Label htmlFor="company" className="text-[#cce8f0]">Company</Label>
+                    <Input
+                      id="company"
+                      name="company"
+                      value={formData.company}
+                      onChange={handleChange}
+                      className="mt-2 bg-[#020b18] border-[#14e0ff]/30 text-white focus-visible:ring-[#14e0ff]"
+                    />
+                  </div>
+                  <div className="md:col-span-2">
+                    <Label htmlFor="message" className="text-[#cce8f0]">Message *</Label>
+                    <Textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      rows={5}
+                      className="mt-2 bg-[#020b18] border-[#14e0ff]/30 text-white focus-visible:ring-[#14e0ff]"
+                    />
+                  </div>
+                  <div className="md:col-span-2 text-center">
+                    <button
+                      type="submit"
+                      className="cv-download-btn !mt-2 w-full md:w-auto"
+                      disabled={sending}
+                    >
+                      {sending ? "Sending..." : "Send Message"}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </AnimatedOnScroll>
           </div>
         </div>
       </div>

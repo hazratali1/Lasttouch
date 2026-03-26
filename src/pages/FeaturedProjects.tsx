@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { projectsData } from "@/data/portfolioData";
 import { ChevronDown } from "lucide-react";
+import { AnimatedOnScroll } from "@/components/ui/AnimatedOnScroll";
 
 const FeaturedProjects = () => {
   const [activeTab, setActiveTab] = useState("LLM / RAG / GenAI");
@@ -22,57 +23,60 @@ const FeaturedProjects = () => {
         </p>
 
         {/* Category Tabs */}
-        <div className="project-tabs">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => {
-                setActiveTab(cat);
-                setOpenIndex(null); // Close accordion on tab switch
-              }}
-              className={`tab-btn ${activeTab === cat ? "active" : ""}`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+        <AnimatedOnScroll direction="up">
+          <div className="project-tabs">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => {
+                  setActiveTab(cat);
+                  setOpenIndex(null); // Close accordion on tab switch
+                }}
+                className={`tab-btn ${activeTab === cat ? "active" : ""}`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </AnimatedOnScroll>
 
         {/* Projects Container */}
         <div className={`project-category active ${openIndex !== null ? 'has-open' : ''}`}>
           {displayedProjects.map((project, index) => {
             const isOpen = openIndex === index;
             return (
-              <div
-                key={index}
-                className={`project-box cert-box ${isOpen ? 'open' : ''}`}
-                onClick={() => toggleAccordion(index)}
-                style={{
-                  padding: '26px 30px',
-                  borderRadius: '20px',
-                  background: 'linear-gradient(145deg, #0b2742, #061a30)'
-                }}
-              >
-                <div className="project-header">
-                  <div>
-                    <h3 style={{ color: 'white', fontSize: '17px', marginBottom: '8px' }}>{project.title}</h3>
-                    <p style={{ fontSize: '13.5px', color: '#b8d4e0', lineHeight: 1.6 }}>{project.desc}</p>
-                    <span style={{ fontSize: '13px', color: '#14e0ff', display: 'block', marginTop: '10px' }}>{project.tech}</span>
+              <AnimatedOnScroll key={`${activeTab}-${index}`} direction={index % 2 === 0 ? "left" : "right"} delay={index * 0.05}>
+                <div
+                  className={`project-box cert-box ${isOpen ? 'open' : ''}`}
+                  onClick={() => toggleAccordion(index)}
+                  style={{
+                    padding: '26px 30px',
+                    borderRadius: '20px',
+                    background: 'linear-gradient(145deg, #0b2742, #061a30)'
+                  }}
+                >
+                  <div className="project-header">
+                    <div>
+                      <h3 style={{ color: 'white', fontSize: '17px', marginBottom: '8px' }}>{project.title}</h3>
+                      <p style={{ fontSize: '13.5px', color: '#b8d4e0', lineHeight: 1.6 }}>{project.desc}</p>
+                      <span style={{ fontSize: '13px', color: '#14e0ff', display: 'block', marginTop: '10px' }}>{project.tech}</span>
+                    </div>
+                    <ChevronDown
+                      className="toggle-icon"
+                      style={{
+                        transition: "transform 0.35s ease",
+                        transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+                        flexShrink: 0
+                      }}
+                    />
                   </div>
-                  <ChevronDown
-                    className="toggle-icon"
-                    style={{
-                      transition: "transform 0.35s ease",
-                      transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-                      flexShrink: 0
-                    }}
-                  />
-                </div>
-                <div className="project-body">
-                  <div className="project-detail-text">
-                    {project.details}
+                  <div className="project-body">
+                    <div className="project-detail-text">
+                      {project.details}
+                    </div>
                   </div>
                 </div>
-              </div>
+              </AnimatedOnScroll>
             );
           })}
         </div>

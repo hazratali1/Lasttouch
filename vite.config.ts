@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     mode === "development" && componentTagger(),
-    viteSingleFile(),
+    mode === "production" && viteSingleFile(),
   ].filter(Boolean),
   resolve: {
     alias: {

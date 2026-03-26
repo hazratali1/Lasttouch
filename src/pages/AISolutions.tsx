@@ -1,6 +1,6 @@
-
 import { Link } from "react-router-dom";
 import { TrendingUp, MessageSquare, Eye, Sparkles, Check, Star } from "lucide-react";
+import { AnimatedOnScroll } from "@/components/ui/AnimatedOnScroll";
 
 const AISolutions = () => {
   const reviews = [
@@ -19,22 +19,42 @@ const AISolutions = () => {
     {
       icon: TrendingUp,
       title: "LLM Agents & Orchestration",
-      description: "Building autonomous AI agents that can reason, use tools, and automate complex business workflows.",
+      items: [
+        "Multi-Agent System Architecture",
+        "Dynamic Tool Usage & API Calling",
+        "Reasoning & Planning Capabilities",
+        "Complex Business Workflow Automation",
+      ],
     },
     {
       icon: MessageSquare,
       title: "Generative AI & RAG",
-      description: "Developing context-aware LLM systems grounded in your private data and integrated directly into websites and apps.",
+      items: [
+        "Custom Context-Aware Chatbots",
+        "Private Knowledge Base Integration",
+        "Vector Database Optimization",
+        "Semantic Search APIs",
+      ],
     },
     {
       icon: Eye,
       title: "Computer Vision & Multimodal",
-      description: "Implementing real-time object detection and vision-language models for advanced visual understanding.",
+      items: [
+        "Real-time Object Detection",
+        "Image Classification & Segmentation",
+        "Face Recognition & Tracking",
+        "Vision-Language Model Integration",
+      ],
     },
     {
       icon: Sparkles,
       title: "AI Workflow Automation",
-      description: "Automating mission-critical processes using n8n, Make, and Zapier, integrating LLMs into end-to-end pipelines.",
+      items: [
+        "Visual Pipeline Design (n8n, Make)",
+        "LLM Integration in Automation flows",
+        "Cross-platform API Syncing",
+        "Scheduled & Trigger-based Tasks",
+      ],
     },
   ];
 
@@ -66,19 +86,25 @@ const AISolutions = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {capabilities.map((capability, index) => (
-              <div
-                key={index}
-                className="exp-box group"
-              >
-                <capability.icon
-                  className="text-[#14e0ff] mb-4 group-hover:scale-110 transition-transform"
-                  size={48}
-                />
-                <h3 className="text-[20px] font-bold text-white mb-2">
-                  {capability.title}
-                </h3>
-                <p className="text-[14px] opacity-90 text-[#cce8f0] leading-relaxed">{capability.description}</p>
-              </div>
+              <AnimatedOnScroll key={index} direction={index % 2 === 0 ? "left" : "right"} delay={index * 0.1}>
+                <div className="exp-box group h-full">
+                  <capability.icon
+                    className="text-[#14e0ff] mb-4 group-hover:scale-110 transition-transform"
+                    size={48}
+                  />
+                  <h3 className="text-[20px] font-bold text-white mb-4">
+                    {capability.title}
+                  </h3>
+                  <ul className="space-y-2">
+                    {capability.items.map((item, itemIndex) => (
+                      <li key={itemIndex} className="flex items-start gap-3">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#14e0ff] mt-[7px] flex-shrink-0 shadow-[0_0_8px_rgba(20,224,255,1)]" />
+                        <span className="text-[#cce8f0] opacity-90 text-[14px] leading-relaxed">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </AnimatedOnScroll>
             ))}
           </div>
         </section>
@@ -114,34 +140,38 @@ const AISolutions = () => {
 
         {/* Why Choose LastTouch */}
         <section className="mb-20">
-          <div className="box mx-auto !w-full">
-            <h2 className="text-3xl font-bold text-white text-center mb-8">
-              Why Choose LastTouch
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {benefits.map((benefit, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <Check className="text-[#14e0ff] mt-1 flex-shrink-0" size={18} />
-                  <p className="text-[15px] opacity-90 text-[#cce8f0] leading-relaxed">{benefit}</p>
-                </div>
-              ))}
+          <AnimatedOnScroll direction="up">
+            <div className="box mx-auto !w-full">
+              <h2 className="text-3xl font-bold text-white text-center mb-8">
+                Why Choose LastTouch
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {benefits.map((benefit, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <Check className="text-[#14e0ff] mt-1 flex-shrink-0" size={18} />
+                    <p className="text-[15px] opacity-90 text-[#cce8f0] leading-relaxed">{benefit}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          </AnimatedOnScroll>
         </section>
 
         {/* CTA */}
-        <div className="box mx-auto !w-full text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">
-            Ready to Transform with AI?
-          </h2>
-          <p className="text-[15px] opacity-90 text-[#cce8f0] mb-8 leading-relaxed">
-            Schedule a consultation with our AI experts and discover how we can unlock new
-            opportunities for your business.
-          </p>
-          <Link to="/contact" className="cv-download-btn">
-            Schedule an AI Consultation
-          </Link>
-        </div>
+        <AnimatedOnScroll direction="up">
+          <div className="box mx-auto !w-full text-center">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              Ready to Transform with AI?
+            </h2>
+            <p className="text-[15px] opacity-90 text-[#cce8f0] mb-8 leading-relaxed">
+              Schedule a consultation with our AI experts and discover how we can unlock new
+              opportunities for your business.
+            </p>
+            <Link to="/contact" className="cv-download-btn">
+              Schedule an AI Consultation
+            </Link>
+          </div>
+        </AnimatedOnScroll>
       </div>
     </div>
   );

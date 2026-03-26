@@ -1,6 +1,6 @@
-
 import { Link } from "react-router-dom";
 import { Brain, Cloud, Code, Shield } from "lucide-react";
+import { AnimatedOnScroll } from "@/components/ui/AnimatedOnScroll";
 
 const Services = () => {
   const services = [
@@ -61,42 +61,43 @@ const Services = () => {
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
           {services.map((service, index) => (
-            <div
-              key={index}
-              className="exp-box group"
-            >
-              <service.icon
-                className="text-[#14e0ff] mb-4 group-hover:scale-110 transition-transform"
-                size={48}
-              />
-              <h2 className="text-[20px] font-bold text-white mb-4">
-                {service.title}
-              </h2>
-              <ul className="space-y-2">
-                {service.items.map((item, itemIndex) => (
-                  <li key={itemIndex} className="flex items-start gap-3">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#14e0ff] mt-[7px] flex-shrink-0 shadow-[0_0_8px_rgba(20,224,255,1)]" />
-                    <span className="text-[#cce8f0] opacity-90 text-[14px] leading-relaxed">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <AnimatedOnScroll key={index} direction={index % 2 === 0 ? "left" : "right"} delay={index * 0.1}>
+              <div className="exp-box group h-full">
+                <service.icon
+                  className="text-[#14e0ff] mb-4 group-hover:scale-110 transition-transform"
+                  size={48}
+                />
+                <h2 className="text-[20px] font-bold text-white mb-4">
+                  {service.title}
+                </h2>
+                <ul className="space-y-2">
+                  {service.items.map((item, itemIndex) => (
+                    <li key={itemIndex} className="flex items-start gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#14e0ff] mt-[7px] flex-shrink-0 shadow-[0_0_8px_rgba(20,224,255,1)]" />
+                      <span className="text-[#cce8f0] opacity-90 text-[14px] leading-relaxed">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </AnimatedOnScroll>
           ))}
         </div>
 
         {/* CTA Section */}
-        <div className="box mx-auto !w-full text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">
-            Let's Build Something <span style={{ color: "#14e0ff" }}>Intelligent</span> Together
-          </h2>
-          <p className="text-[15px] opacity-90 text-[#cce8f0] mb-8 leading-relaxed">
-            Ready to transform your business with cutting-edge technology? Our team is
-            here to help you succeed.
-          </p>
-          <Link to="/contact" className="cv-download-btn">
-            Get Started Today
-          </Link>
-        </div>
+        <AnimatedOnScroll direction="up">
+          <div className="box mx-auto !w-full text-center">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              Let's Build Something <span style={{ color: "#14e0ff" }}>Intelligent</span> Together
+            </h2>
+            <p className="text-[15px] opacity-90 text-[#cce8f0] mb-8 leading-relaxed">
+              Ready to transform your business with cutting-edge technology? Our team is
+              here to help you succeed.
+            </p>
+            <Link to="/contact" className="cv-download-btn">
+              Get Started Today
+            </Link>
+          </div>
+        </AnimatedOnScroll>
       </div>
     </div>
   );

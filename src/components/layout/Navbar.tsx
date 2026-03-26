@@ -2,14 +2,14 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/images/branding/logo.png";
+
+const fallbackLogo =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23020b18'/%3E%3Cstop offset='100%25' stop-color='%230b3a55'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23g)' stroke='%2314e0ff' stroke-width='2'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-size='20' font-family='Inter,Arial,sans-serif' fill='white' font-weight='700'%3ELT%3C/text%3E%3C/svg%3E";
 
 interface NavbarProps {
   onMenuStateChange?: (isOpen: boolean) => void;
 }
-
-const fallbackLogo =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23020b18'/%3E%3Cstop offset='100%25' stop-color='%230b3a55'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='30' fill='url(%23g)' stroke='%2314e0ff' stroke-width='2'/%3E%3Ctext x='32' y='39' text-anchor='middle' font-size='20' font-family='Inter,Arial,sans-serif' fill='white' font-weight='700'%3ELT%3C/text%3E%3C/svg%3E";
 
 const Navbar = ({ onMenuStateChange }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,11 +30,86 @@ const Navbar = ({ onMenuStateChange }: NavbarProps) => {
 
   const isActive = (path: string) => location.pathname === path;
 
+
+  const mobileMenu = (
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        backgroundColor: "#020b18",
+        zIndex: 99999,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "36px",
+        overflowY: "auto",
+      }}
+    >
+      {/* Navbar header inside the overlay */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "16px 24px",
+          borderBottom: "1px solid rgba(255,255,255,0.1)",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <img
+            src={logo}
+            alt="LastTouch Logo"
+            onError={(e) => { e.currentTarget.src = fallbackLogo; }}
+            style={{
+              width: "44px",
+              height: "44px",
+              borderRadius: "50%",
+              border: "2px solid #14e0ff",
+              objectFit: "cover",
+            }}
+          />
+          <span style={{ fontSize: "20px", fontWeight: 700, color: "white" }}>LastTouch</span>
+        </div>
+        <button
+          onClick={() => setIsOpen(false)}
+          style={{ color: "#14e0ff", background: "none", border: "none", cursor: "pointer" }}
+          aria-label="Close menu"
+        >
+          <X size={26} />
+        </button>
+      </div>
+
+      {/* Nav links */}
+      {navLinks.map((link) => (
+        <Link
+          key={link.path}
+          to={link.path}
+          onClick={() => setIsOpen(false)}
+          style={{
+            fontSize: "22px",
+            fontWeight: 700,
+            textDecoration: "none",
+            color: isActive(link.path) ? "#14e0ff" : "#cfdbe6",
+            letterSpacing: "0.5px",
+          }}
+        >
+          {link.name}
+        </Link>
+      ))}
+    </div>
+  );
+
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 backdrop-blur-xl border-b border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.3)] ${
-        isOpen ? 'z-[100001] bg-[#020b18]' : 'z-50 bg-[#020b18]/95 md:bg-background/50'
-      }`}>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#020b18]/95 md:bg-background/50 backdrop-blur-xl border-b border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.3)]">
         <div className="w-full px-6 md:px-[60px] py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-3">
@@ -43,53 +118,44 @@ const Navbar = ({ onMenuStateChange }: NavbarProps) => {
                 alt="LastTouch Logo"
                 loading="eager"
                 decoding="async"
-                onError={(event) => {
-                  event.currentTarget.src = fallbackLogo;
-                }}
+                onError={(event) => { event.currentTarget.src = fallbackLogo; }}
                 className="h-[44px] w-[44px] rounded-full border-2 border-[#14e0ff] object-cover"
               />
               <span className="text-xl md:text-2xl font-bold text-white tracking-wide">LastTouch</span>
             </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-6">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={`relative px-1 py-1 text-[15px] font-medium transition-all duration-300 ${
+                    isActive(link.path) ? "text-[#14e0ff]" : "text-[#cfdbe6] hover:text-[#14e0ff]"
+                  }`}
+                >
+                  {link.name}
+                  {isActive(link.path) && (
+                    <span className="absolute left-0 -bottom-1 w-full h-[2px] bg-[#14e0ff] drop-shadow-[0_0_8px_rgba(20,224,255,1)]"></span>
+                  )}
+                </Link>
+              ))}
+            </div>
+
+            {/* Mobile Menu Button */}
             <button
-              className="md:hidden flex items-center justify-center p-2 rounded focus:outline-none focus:ring-2 focus:ring-[#14e0ff]"
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label="Toggle menu"
+              className="md:hidden text-[#14e0ff] p-1"
+              onClick={() => setIsOpen(true)}
+              aria-label="Open menu"
             >
-              {isOpen ? <X size={26} /> : <Menu size={26} />}
+              <Menu size={26} />
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Navigation Overlay rendered via Portal */}
-      {isOpen && typeof window !== 'undefined' && createPortal(
-        <div className="mobile-menu-solid md:hidden">
-          <button
-            className="absolute top-6 right-6 text-white"
-            onClick={() => setIsOpen(false)}
-            aria-label="Close menu"
-          >
-            <X size={32} />
-          </button>
-          <div className="flex flex-col items-center gap-10 px-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                onClick={() => setIsOpen(false)}
-                className={`block text-2xl font-bold transition-all duration-300 ${
-                  isActive(link.path)
-                    ? "text-[#14e0ff] scale-110"
-                    : "text-[#cfdbe6] hover:text-[#14e0ff]"
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
-        </div>,
-        document.body
-      )}
+      {/* Mobile menu portal */}
+      {isOpen && createPortal(mobileMenu, document.body)}
     </>
   );
 };
